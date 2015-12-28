@@ -1,0 +1,11 @@
+<decorators defaultdir="/decorators">
+    <excludes>
+        <pattern>**ajax=true</pattern>
+    </excludes>
+    <decorator name="default" page="default.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+    <decorator name="homePage" page="default2.jsp">
+        <pattern>/home*</pattern>
+    </decorator>
+</decorators>
