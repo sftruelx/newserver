@@ -1,6 +1,8 @@
 <decorators defaultdir="/decorators">
     <excludes>
         <pattern>**ajax=true</pattern>
+         <pattern>/testeasyui.jsp</pattern>
+         <pattern>/homePage*</pattern>
     </excludes>
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
