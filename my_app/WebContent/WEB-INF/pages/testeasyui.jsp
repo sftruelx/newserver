@@ -16,7 +16,7 @@
 	<input id="email" class="easyui-textbox">
 	</div>
 </div>
-    <table id="dg" title="My Users" class="easyui-datagrid" style="width:100%;height:600px"
+    <table id="dg" title="My Users" class="easyui-datagrid" style="width:100%;height:80%"
             url="jsonlist"
             toolbar="#toolbar" pagination="true"
             rownumbers="true" fitColumns="true" singleSelect="true">
@@ -70,9 +70,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
     </div>
-    <div>
-    广告位招租
-    </div>
+
     <script type="text/javascript">
         var url="userform";
         function newUser(){
