@@ -22,13 +22,14 @@ public class UserController {
     @RequestMapping("/jsonusers*")
     public List<User> execute2(ModelMap model, HttpServletRequest request) {
     	String username = request.getParameter("username");
-    	model.addAttribute("userList", userManager.getUsers());
-        return userManager.getUsers();
+//    	model.addAttribute("userList", userManager.getUsers());
+//        return userManager.getUsers();
+    	return null;
     }
     
     @RequestMapping("/users*")
     public String execute(ModelMap model) {
-    	model.addAttribute("userList", userManager.getUsers());
+//    	model.addAttribute("userList", userManager.getUsers());
         return "userList";
     }
 }

@@ -14,7 +14,10 @@
 		<!--<Logger name="org.hibernate.SQL" level="debug"/>-->
 		<Logger name="org.springframework" level="warn"/>
         <Logger name="com.gargoylesoftware.htmlunit" level="error"/>
-		<Logger name="com.app1" level="debug"/>
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+        <logger name="log4j.logger.org.hibernate.type" level="TRACE"/>
+        <logger name="log4j.logger.org.hibernate.sql" level="TRACE"/>
+		<Logger name="com.app1" level="TRACE"/>
 		<Logger name="com.app1.tool" level="info"/>
 
 		<Root level="warn">

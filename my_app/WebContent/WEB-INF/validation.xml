@@ -4,17 +4,5 @@
     "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
 
 <form-validation>
-    <formset>
-        <form name="user">
-            <field property="username" depends="required">
-                <arg key="user.username"/>
-            </field>
-            <field property="password" depends="required">
-                <arg key="user.password"/>
-            </field>
-            <field property="email" depends="required">
-                <arg key="user.email"/>
-            </field>
-        </form>
-    </formset>
+
 </form-validation>

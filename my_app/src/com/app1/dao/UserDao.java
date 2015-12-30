@@ -1,12 +1,14 @@
 package com.app1.dao;
 
-import com.app1.model.User;
+import java.util.Map;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.app1.model.User;
+import com.app1.util.Pager;
 
 /**
  * User Data Access Object (GenericDao) interface.
@@ -30,7 +32,8 @@ public interface UserDao extends GenericDao<User, Long> {
      *
      * @return List populated list of users
      */
-    List<User> getUsers();
+    @SuppressWarnings("rawtypes")
+	Pager getUsers(int pageNo, int pageSize, Map map);
 
     /**
      * Saves a user's information.

@@ -1,6 +1,6 @@
 package com.app1.service;
 
-import com.app1.model.User;
+import java.util.Map;
 
 import javax.jws.WebService;
 import javax.ws.rs.DELETE;
@@ -8,7 +8,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import java.util.List;
+
+import com.app1.model.User;
+import com.app1.util.Pager;
 
 /**
  * Web Service interface so hierarchy of Generic Manager isn't carried through.
@@ -40,7 +42,7 @@ public interface UserService {
      * @return List
      */
     @GET
-    List<User> getUsers();
+    Pager getUsers(int pageNo, int pageSize, Map map);
 
     /**
      * Saves a user's information

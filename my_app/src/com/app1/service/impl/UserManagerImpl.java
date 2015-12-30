@@ -1,12 +1,13 @@
 package com.app1.service.impl;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.jws.WebService;
+
 import org.apache.commons.lang.StringUtils;
-import com.app1.dao.UserDao;
-import com.app1.model.User;
-import com.app1.service.MailEngine;
-import com.app1.service.UserExistsException;
-import com.app1.service.UserManager;
-import com.app1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,11 +15,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.jws.WebService;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.app1.dao.UserDao;
+import com.app1.model.User;
+import com.app1.service.MailEngine;
+import com.app1.service.UserExistsException;
+import com.app1.service.UserManager;
+import com.app1.service.UserService;
+import com.app1.util.Pager;
 
 
 /**
@@ -100,9 +103,10 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     /**
      * {@inheritDoc}
      */
-    @Override
-    public List<User> getUsers() {
-        return userDao.getAllDistinct();
+    @SuppressWarnings("rawtypes")
+	@Override
+    public Pager getUsers(int pageNo, int pageSize, Map map) {
+        return userDao.getUsers( pageNo,  pageSize,  map);
     }
 
     /**

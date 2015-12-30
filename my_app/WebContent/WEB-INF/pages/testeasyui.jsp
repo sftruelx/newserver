@@ -1,20 +1,22 @@
+
+<%@ include file="/common/taglibs.jsp"%>
+<%@ page contentType="text/html;charset=utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>Basic CRUD Application - jQuery EasyUI CRUD Demo</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/styles/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/styles/easyui/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/styles/easyui/themes/color.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/styles/easyui/demo/demo.css">
-    <script type="text/javascript" src="${ctx}/styles/jquery-1.6.min.js"></script>
-    <script type="text/javascript" src="${ctx}/styles/easyui/jquery.easyui.min.js"></script>
 </head>
 <body>
-    <h2>Basic CRUD Application</h2>
-    <p>Click the buttons on datagrid toolbar to do crud actions.</p>
-    
-    <table id="dg" title="My Users" class="easyui-datagrid" style="width:700px;height:250px"
+<div style="margin-left:10px;padding-bottom:6px">
+    <h4>请输入查询条件</h4>
+    <div id="tb" style="padding:3px">
+	<span>   User name:</span>
+	<input id="username" class="easyui-textbox">
+	<span>Email:</span>
+	<input id="email" class="easyui-textbox">
+	</div>
+</div>
+    <table id="dg" title="My Users" class="easyui-datagrid" style="width:100%;height:600px"
             url="jsonlist"
             toolbar="#toolbar" pagination="true"
             rownumbers="true" fitColumns="true" singleSelect="true">
@@ -22,18 +24,19 @@
             <tr>
                 <th field="firstName" width="50">First Name</th>
                 <th field="lastName" width="50">Last Name</th>
-                <th field="phoneNumber" width="50">Phone</th>
+                <th field="phoneNumber" width="50">电话</th>
                 <th field="email" width="50">Email</th>
             </tr>
         </thead>
     </table>
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-user_key" plain="true" onclick="newUser()">New User</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit User</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-user-delete" plain="true" onclick="destroyUser()">Remove User</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-filter" plain="true" onclick="doSearch()">Retrieve User</a>
     </div>
     
-    <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+    <div id="dlg" class="easyui-dialog" style="width:400px;height:320px;padding:10px 20px"
             closed="true" buttons="#dlg-buttons">
         <div class="ftitle">User Information</div>
         <form id="fm" method="post" novalidate>
@@ -46,6 +49,10 @@
                 <input name="lastName" class="easyui-textbox" required="true">
             </div>
             <div class="fitem">
+                <label>Password:</label>
+                <input name="password"  type="password" class="easyui-textbox" required="true">
+            </div>
+            <div class="fitem">
                 <label>Phone:</label>
                 <input name="phoneNumber" class="easyui-textbox">
             </div>
@@ -53,25 +60,32 @@
                 <label>Email:</label>
                 <input name="email" class="easyui-textbox" validType="email">
             </div>
+            <div class="fitem">
+                <label>user name:</label>
+                <input name="username" class="easyui-textbox"  required="true">
+            </div>
         </form>
     </div>
     <div id="dlg-buttons">
         <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
     </div>
+    <div>
+    广告位招租
+    </div>
     <script type="text/javascript">
-        var url;
+        var url="userform";
         function newUser(){
             $('#dlg').dialog('open').dialog('center').dialog('setTitle','New User');
             $('#fm').form('clear');
-            url = 'save_user.php';
+            url = 'userform';
         }
         function editUser(){
             var row = $('#dg').datagrid('getSelected');
             if (row){
                 $('#dlg').dialog('open').dialog('center').dialog('setTitle','Edit User');
                 $('#fm').form('load',row);
-                url = 'update_user.php?id='+row.id;
+                url = 'userform?id='+row.id+"&version="+row.version;
             }
         }
         function saveUser(){
@@ -99,7 +113,7 @@
             if (row){
                 $.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
                     if (r){
-                        $.post('destroy_user.php',{id:row.id},function(result){
+                        $.post('userform',{id:row.id},function(result){
                             if (result.success){
                                 $('#dg').datagrid('reload');    // reload the user data
                             } else {
@@ -112,6 +126,12 @@
                     }
                 });
             }
+        }
+        function doSearch(){
+        	$('#dg').datagrid('load',{
+        		username: $('#username').val(),
+        		email: $('#email').val()
+        	});
         }
     </script>
     <style type="text/css">

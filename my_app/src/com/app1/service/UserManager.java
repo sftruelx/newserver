@@ -1,11 +1,14 @@
 package com.app1.service;
 
-import com.app1.dao.UserDao;
-import com.app1.model.User;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
+import com.app1.dao.UserDao;
+import com.app1.model.User;
+import com.app1.util.Pager;
 
 
 /**
@@ -50,7 +53,7 @@ public interface UserManager extends GenericManager<User, Long> {
      * Retrieves a list of all users.
      * @return List
      */
-    List<User> getUsers();
+    Pager getUsers(int pageNo, int pageSize, Map map);
 
     /**
      * Saves a user's information.

@@ -56,7 +56,7 @@
 	background:url('icons/tip.png') no-repeat center center;
 }
 .icon-filter{
-	background:url('icons/filter.png') no-repeat center center;
+	background:url('icons/zoom.png') no-repeat center center;
 }
 .icon-man{
 	background:url('icons/man.png') no-repeat center center;
@@ -67,8 +67,15 @@
 .icon-more{
 	background:url('icons/more.png') no-repeat center center;
 }
-
-
+.icon-user-delete{
+	background:url('icons/user_delete.png') no-repeat center center;
+}
+.icon-user_key{
+	background:url('icons/user_key.png') no-repeat center center;
+}
+.icon-page_white_text{
+	background:url('icons/page_white_text.png') no-repeat center center;
+}
 .icon-mini-add{
 	background:url('icons/mini_add.png') no-repeat center center;
 }
