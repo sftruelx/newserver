@@ -1,5 +1,6 @@
 package com.app1.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,20 @@ public class ClassifyManagerImpl  extends GenericManagerImpl<Classify, Long> imp
 	    public Pager getClassifies(int pageNo, int pageSize, Map map) {
 	        return dao.getClassifies(pageNo, pageSize, map);
 	    }
-
+	    public Classify saveClassify(Classify classify){
+	    	return dao.save(classify);
+	    }
+	    
+	    public List getLevel(){
+	    	return  dao.getLevel();
+	    }
+	    
+	    public List getParent(String title){
+	    	return  dao.getParent(title);
+	    }
+	    
+	    public void removeClassify(long id){
+	    	dao.remove(id);
+	    }
 
 }

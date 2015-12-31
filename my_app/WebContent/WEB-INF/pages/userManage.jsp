@@ -30,10 +30,10 @@
         </thead>
     </table>
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-user" plain="true" onclick="newUser()">New User</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-pencil" plain="true" onclick="editUser()">Edit User</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-trash" plain="true" onclick="destroyUser()">Remove User</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-search" plain="true" onclick="doSearch()">Retrieve User</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-user" plain="true" onclick="newUser()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-pencil" plain="true" onclick="editUser()">编辑</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-trash" plain="true" onclick="destroyUser()">删除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-search" plain="true" onclick="doSearch()">查找</a>
     </div>
     
     <div id="dlg" class="easyui-dialog" style="width:400px;height:320px;padding:10px 20px"
@@ -132,28 +132,6 @@
         	});
         }
     </script>
-    <style type="text/css">
-        #fm{
-            margin:0;
-            padding:10px 30px;
-        }
-        .ftitle{
-            font-size:14px;
-            font-weight:bold;
-            padding:5px 0;
-            margin-bottom:10px;
-            border-bottom:1px solid #ccc;
-        }
-        .fitem{
-            margin-bottom:5px;
-        }
-        .fitem label{
-            display:inline-block;
-            width:80px;
-        }
-        .fitem input{
-            width:160px;
-        }
-    </style>
+
 </body>
 </html>

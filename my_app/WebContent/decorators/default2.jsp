@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Basic Layout - jQuery EasyUI Demo</title>
+<title></title>
 <link rel="stylesheet" type="text/css"
 	href="${ctx}/styles/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css"
@@ -17,10 +17,21 @@
 <script type="text/javascript" src="${ctx}/styles/easyui/jquery.min.js"></script>
 <script type="text/javascript"
 	src="${ctx}/styles/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${ctx}/styles/easyui/jgxLoader.js"></script>
 
+<script type="text/javascript">
+function open1(url,a){
+	currPageItem = $(a).text();
+	$('body>div.menu-top').menu('destroy');
+	$('body>div.window>div.window-body').window('destroy');
+	$('#demo').panel('refresh',url);
+}
+
+</script>
 <decorator:head />
 </head>
 <body>
+
 	<div class="easyui-layout" data-options="fit:true">
 		<div data-options="region:'north'" style="height: 50px">
 			<h2>广告位隆重招商</h2>
@@ -28,41 +39,46 @@
 		<div data-options="region:'west',split:true" title=""
 			style="width: 200px;">
 			<div class="easyui-accordion" style="width: 100%; height: 99.8%;">
-			<div title="菜单栏" data-options="iconCls:'fa fa-mixcloud'"
-					style="padding: 10px;">
-					<ul id="menu-tree" class="easyui-tree" data-options="url:'${ctx}/styles/tree_data.json',method:'get',animate:true"></ul>
-				</div>
-				<div title="About" data-options="iconCls:'icon-application_xp'"
-					style="overflow: auto; padding: 10px;">
-					<h3 style="color: #0099FF;">Accordion for jQuery</h3>
-					<p><i class="fa fa-camera-retro"></i>Accordion is a part of easyui framework for jQuery. It lets
-						you define your accordion component<i class="fa fa-shield"></i> normal<br> on web page more easily.</p>
-				</div>
-				<div title="Help" data-options="iconCls:'icon-help'"
-					style="padding: 10px;">
-					<p>The accordion allows you to provide multiple panels and
-						display one or more at a time. Each panel has built-in support for
-						expanding and collapsing. Clicking on a panel header to expand or
-						collapse that panel body. The panel content can be loaded via ajax
-						by specifying a 'href' property. Users can define a panel to be
-						selected. If it is not specified, then the first panel is taken by
-						default.</p>
-				</div>
-				
+	<ul>
+		<li><a href='javascript:void(0)' onclick="open1('classManage',this)">分类管理</a></li>
+		<li><a href='javascript:void(0)' onclick="open1('userManage',this)">用户管理</a></li>
+	</ul>
+		
+		
 			</div>
 
 		</div>
-		<div
+		<div id="demo"
 			data-options="region:'center',title:'   ',iconCls:'icon-page_white_text'">
 			<decorator:body />
 		</div>
 	</div>
-	<!-- <script type="text/javascript">
-	$('#menu-tree').tree({
-	    onClick: function(node){
-	        alert(node.text);  // alert node text property when clicked
-	    }
-	});
-	</script> -->
+	<style type="text/css">
+#fm {
+	margin: 0;
+	padding: 10px 30px;
+}
+
+.ftitle {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 5px 0;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.fitem {
+	margin-bottom: 5px;
+}
+
+.fitem label {
+	display: inline-block;
+	width: 80px;
+}
+
+.fitem input {
+	width: 160px;
+}
+</style>
 </body>
 </html>

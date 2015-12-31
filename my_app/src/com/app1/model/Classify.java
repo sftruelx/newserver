@@ -11,11 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -31,8 +34,9 @@ public class Classify extends BaseObject implements Serializable{
 	private String title;
 	private String img_url;
 	private String img_path;
+	private String end;
 	private Date create_tm;
-	
+	private MultipartFile[] files;
 	
 	 public Classify() {
 	    }
@@ -131,11 +135,22 @@ public class Classify extends BaseObject implements Serializable{
 	}
 
 
+    @Column(name = "end")
+    @Field
+	public String getEnd() {
+		return end;
+	}
+
+
+	public void setEnd(String end) {
+		this.end = end;
+	}
+
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return null;
+		return id + this.title + this.level + "....";
 	}
 
 
@@ -152,5 +167,15 @@ public class Classify extends BaseObject implements Serializable{
 	public int hashCode() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	 @Transient
+	 @JsonIgnore
+	public MultipartFile[] getFiles() {
+		return files;
+	}
+
+
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
 	}
 }

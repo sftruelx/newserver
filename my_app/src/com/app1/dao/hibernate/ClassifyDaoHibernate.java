@@ -27,6 +27,7 @@ public class ClassifyDaoHibernate extends GenericDaoHibernate<Classify, Long> im
 		
 	}
 
+	@SuppressWarnings("finally")
 	public Pager findPageByCriteria(int pageNo, int pageSize, Map map)
 	{
 		Pager pager = null;
@@ -39,7 +40,12 @@ public class ClassifyDaoHibernate extends GenericDaoHibernate<Classify, Long> im
 				Set<String> keys = map.keySet();
 				for (String key : keys)
 				{
+					if("title".equals(key)){
 					criteria.add(Restrictions.like(key, "%"+map.get(key)+"%"));
+					}else{
+						criteria.add(Restrictions.eq(key, map.get(key)));
+					}
+					
 				}
 			}
 
@@ -60,6 +66,32 @@ public class ClassifyDaoHibernate extends GenericDaoHibernate<Classify, Long> im
 			return pager;
 		}
 
+	}
+	
+	public List<Object> getLevel(){
+		Criteria criteria = this.getSession().createCriteria(Classify.class);
+		criteria.setProjection(Projections.distinct(Projections.property("level")));
+		return  criteria.list();
+	}
+	
+	
+	public List<Classify> getParent(String title){
+		Criteria criteria = this.getSession().createCriteria(Classify.class);
+		criteria.add(Restrictions.like("title", "%" + title + "%"));
+		List<Classify> list = criteria.list();
+		return  list;
+	}
+	
+	
+	public Classify saveClassify(Classify classify) {
+		if (log.isDebugEnabled()) {
+			log.debug("classify id: " + classify.getId());
+		}
+			getSession().saveOrUpdate(classify);
+		// necessary to throw a DataIntegrityViolation and catch it in
+		// UserManager
+		getSession().flush();
+		return classify;
 	}
 	
 }

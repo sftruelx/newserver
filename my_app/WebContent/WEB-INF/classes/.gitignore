@@ -2,12 +2,12 @@
 /applicationContext-dao.xml
 /applicationContext-resources.xml
 /applicationContext-service.xml
-/com/
 /db/
 /displaytag.properties
 /ehcache.xml
 /hibernate.cfg.xml
 /hibernate.properties
+/com/
 /jdbc.properties
 /log4j2.xml
 /mail.properties

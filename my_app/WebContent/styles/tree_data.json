@@ -1,82 +1,11 @@
 [{
 	"id":1,
-	"text":"My Documents",
-	"children":[{
-		"id":11,
-		"text":"Photos",
-		"state":"closed",
-		"children":[{
-			"id":111,
-			"text":"Friend"
-		},{
-			"id":112,
-			"text":"<a href='./classManage' title='View function'>Class</a>"
-		},{
-			"id":113,
-			"text":"<a href='./userManage' title='View function'>User</a>"
-		}]
-	},{
+	"text":"<a href='javascript:void(0)' onclick='open1('classManage',this)'>Class</a>"
+	},{   
 		"id":12,
-		"text":"Program Files",
-		"state":"closed",
-		"children":[{
-			"id":121,
-			"text":"Intel"
-		},{
-			"id":122,
-			"text":"Java"
-		},{
-			"id":123,
-			"text":"Microsoft Office"
-		},{
-			"id":124,
-			"text":"Games"
-		}]
-	},{
-		"id":16,
-		"text":"Actions",
-		"children":[{
-			"text":"Add",
-			"iconCls":"icon-add"
-		},{
-			"text":"Remove",
-			"iconCls":"icon-remove"
-		},{
-			"text":"Save",
-			"iconCls":"icon-save"
-		},{
-			"text":"Search",
-			"iconCls":"icon-search"
-		}]
-	},{
-		"id":13,
-		"text":"index.html"
-	},{
-		"id":14,
-		"text":"about.html"
-	},{
-		"id":15,
-		"text":"welcome.html"
-	}]
-},{
-		"id":16,
-		"text":"other function",
-		"children":[{
-		"id":17,
-		"text":"Photos",
-		"children":[{
-			"id":171,
-			"text":"Friend",
-		"iconCls":"fa fa-pencil"
-		},{
-			"id":172,
-			"text":"Wife"
-		},{
-			"id":173,
-			"text":"Company"
-		}]
-		}]
-	}]
+		"text":"<a href='./userManage' title='View function'>User</a>"
+	}
+	]
 	
 	
 	
