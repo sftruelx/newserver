@@ -7,8 +7,8 @@ public class Pager {
 	private int pageSize;
 	private int page;
 	private int total;
-	private List<Object> rows;
-	public Pager(int page, int pageSize,int  total,List<Object> rows){
+	private Object rows;
+	public Pager(int page, int pageSize,int  total,Object rows){
 		this.page = page;
 		this.pageSize = pageSize;
 		this.total = total;
@@ -32,7 +32,7 @@ public class Pager {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	public List<Object> getRows() {
+	public Object getRows() {
 		return rows;
 	}
 	public void setRows(List<Object> rows) {

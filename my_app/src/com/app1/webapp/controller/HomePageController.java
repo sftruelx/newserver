@@ -24,62 +24,12 @@ import com.app1.util.Pager;
 @Controller
 public class HomePageController extends BaseFormController{
 	   private final Log log = LogFactory.getLog(HomePageController.class);
-    @Autowired
-    UserManager userManager;
+  
     @RequestMapping("/homePage*")
     public String execute(ModelMap model) {
 
-        return "testeasyui";
+        return "home";
     }
     
     
-    @ResponseBody 
-    @RequestMapping("/jsonlist*")
-    public Pager execute2(ModelMap model, HttpServletRequest request,@RequestParam("page") int nowpage,@RequestParam("rows") int rows,@RequestParam("username") String username,@RequestParam("email") String email) {
-    	System.out.println("in........"+ nowpage+ " " + rows);
-    	Map<String, Object> map = new HashMap<String, Object>();
-    	System.out.println(username + " " + email);
-    	if(!"".equals(username)){
-    		map.put("username", username);
-    	}
-    	if(!"".equals(email)){
-    		map.put("email", email);
-    	}
-    	Pager p = userManager.getUsers(nowpage, rows, map);
-
-        return p;
-    }
-    
-    @ResponseBody 
-    @RequestMapping("userform")
-    public Map onSubmit(User user, BindingResult result, HttpServletRequest request) throws Exception {
-    	 Map<String, String> map = new HashMap();
-        if (request.getParameter("cancel") != null) {
-        	map.put("errorMsg", "cancel");
-            return map;
-        }
-
-
-
-        log.debug("entering 'onSubmit' method...");
-       
-
-        if (request.getParameter("delete") != null) {
-            userManager.removeUser(user.getId().toString());
-            saveMessage(request, getText("user.deleted", user.getFullName(), request.getLocale()));
-        } else {
-            try {
-                userManager.saveUser(user);
-            } catch (UserExistsException uex) {
-                result.addError(new ObjectError("user", uex.getMessage()));
-                map.put("errorMsg", uex.getMessage());
-                return null;
-            }
-            saveMessage(request, getText("user.saved", user.getFullName(), request.getLocale()));
-        }
-
-        map.put("errorMsg", null);
-
-        return map;
-    }
 }

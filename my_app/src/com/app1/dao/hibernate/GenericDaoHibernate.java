@@ -8,6 +8,8 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.util.Version;
 import com.app1.dao.GenericDao;
 import com.app1.dao.SearchException;
+import com.app1.util.Pager;
+
 import org.hibernate.*;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -211,4 +213,6 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     public void reindexAll(boolean async) {
         HibernateSearchTools.reindexAll(async, getSessionFactory().getCurrentSession());
     }
+
+
 }
