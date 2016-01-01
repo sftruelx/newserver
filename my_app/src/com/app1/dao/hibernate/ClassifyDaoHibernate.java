@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.app1.dao.ClassifyDao;
 import com.app1.model.Classify;
-import com.app1.model.User;
 import com.app1.util.Pager;
 
 @Repository("ClassifyDao")

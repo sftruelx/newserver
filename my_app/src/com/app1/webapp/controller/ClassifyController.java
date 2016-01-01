@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.app1.model.Classify;
 import com.app1.service.ClassifyManager;
 import com.app1.util.Pager;
-import com.app1.webapp.controller.ClassifyController.Data;
 
 @Controller
 public class ClassifyController extends BaseFormController {
-
-	String savePath = "d:/upload/";
+	@Value("#{configProperties['root']}")
+	String savePath ;
 	@Autowired
 	ClassifyManager classifyManager;
 
@@ -38,9 +38,8 @@ public class ClassifyController extends BaseFormController {
 
 	@ResponseBody
 	@RequestMapping("/classifies*")
-	public Pager execute2(Classify cla, HttpServletRequest request, @RequestParam("page") int nowpage,
-			@RequestParam("rows") int rows) {
-
+	public Pager execute2(Classify cla, HttpServletRequest request, @RequestParam("page") int nowpage, @RequestParam("rows") int rows) {
+		System.out.println(savePath);
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (cla.getLevel() > -1) {
 			map.put("level", cla.getLevel());
@@ -116,7 +115,7 @@ public class ClassifyController extends BaseFormController {
 				saveMessage(request, getText("user.deleted", classify.getTitle(), request.getLocale()));
 				map.put("success", "1");
 			} else {
-				//TODO 修改
+				// TODO 修改
 				String fileName = "";
 				MultipartFile[] files = classify.getFiles();
 				// 判断file数组不能为空并且长度大于0
@@ -163,10 +162,10 @@ public class ClassifyController extends BaseFormController {
 		}
 		return result;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("classifyparent*")
-	public List getParent( @RequestParam("title") String  title) {
+	public List getParent(@RequestParam("title") String title) {
 		List<Classify> list = classifyManager.getParent(title);
 		return list;
 	}

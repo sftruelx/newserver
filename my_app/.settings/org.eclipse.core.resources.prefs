@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/pages/classManage.jsp=UTF-8
+encoding//WebContent/decorators/default.jsp=UTF-8
+encoding//WebContent/login.jsp=UTF-8
+encoding//resources/application.properties=UTF-8
