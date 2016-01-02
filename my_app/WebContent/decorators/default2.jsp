@@ -84,10 +84,10 @@
 			style="width: 200px;">
 
 			<ul>
-				<li><a href='javascript:void(0)'
-					onclick="open1('classManage',this)">分类管理</a></li>
+				<li><a href='javascript:void(0)' onclick="open1('classManage',this)">分类管理</a></li>
 				<li><a href='javascript:void(0)'
 					onclick="open1('userManage',this)">用户管理</a></li>
+				<li><a href='javascript:void(0)' onclick="open1('albumManage',this)">专辑管理</a></li>					
 				<li><a href='javascript:void(0)' onclick="open1('#',this)">TODO内容管理</a></li>
 				<li><a href='javascript:void(0)'
 					onclick="open1('userManage',this)">TODO推荐管理</a></li>

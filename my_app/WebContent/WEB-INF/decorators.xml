@@ -6,7 +6,8 @@
          <pattern>/client/**</pattern>
     </excludes>
     <decorator name="default" page="default.jsp">
-        <pattern>/*</pattern>
+        <pattern>/index*</pattern>
+		<pattern>/login*</pattern>
     </decorator>
     <decorator name="homePage" page="default2.jsp">
         <pattern>/home*</pattern>

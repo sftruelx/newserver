@@ -12,10 +12,14 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -167,4 +171,53 @@ public class BaseFormController implements ServletContextAware {
     protected ServletContext getServletContext() {
         return servletContext;
     }
+    
+	public boolean createDir(String destDirName) {
+		File dir = new File(destDirName);
+		if (dir.exists()) {
+			System.out.println("创建目录" + destDirName + "失败，目标目录已经存在");
+			return false;
+		}
+		if (!destDirName.endsWith(File.separator)) {
+			destDirName = destDirName + File.separator;
+		}
+		// 创建目录
+		if (dir.mkdirs()) {
+			System.out.println("创建目录" + destDirName + "成功！");
+			return true;
+		} else {
+			System.out.println("创建目录" + destDirName + "失败！");
+			return false;
+		}
+	}
+	
+	/***
+	 * 保存文件
+	 * 
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 * @throws IllegalStateException
+	 */
+	public  String saveFile(MultipartFile file, String savePath) throws IllegalStateException, IOException {
+
+		// 判断文件是否为空
+		if (!file.isEmpty()) {
+			// 创建目录，用专辑id作为目录名称
+			createDir(savePath);
+
+			// 生成文件名
+			String fileName = file.getOriginalFilename();
+			String prefix = fileName.substring(fileName.lastIndexOf("."));
+			UUID uuid = UUID.randomUUID();
+			String newname = uuid + prefix;// 新文件名
+			// 文件保存路径
+			String filePath = savePath  + "/" + newname;
+
+			// 转存文件
+			file.transferTo(new File(filePath));
+			return filePath;
+		}
+		return null;
+	}
 }

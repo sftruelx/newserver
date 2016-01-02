@@ -19,6 +19,7 @@
         <intercept-url pattern="/app/home**" access="ROLE_ADMIN,ROLE_USER"/>
 		<intercept-url pattern="/app/user**" access="ROLE_ADMIN,ROLE_USER"/>
 		<intercept-url pattern="/app/classify**" access="ROLE_ADMIN,ROLE_USER"/>
+		<intercept-url pattern="/app/album**" access="ROLE_ADMIN,ROLE_USER"/>
         <form-login login-page="/login" authentication-failure-url="/login?error=true"
                     login-processing-url="/j_security_check"/>
         <logout logout-url="/logout"/>

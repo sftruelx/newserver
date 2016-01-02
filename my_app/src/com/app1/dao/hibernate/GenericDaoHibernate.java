@@ -1,25 +1,39 @@
 package com.app1.dao.hibernate;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.util.Version;
-import com.app1.dao.GenericDao;
-import com.app1.dao.SearchException;
-import com.app1.util.Pager;
-
-import org.hibernate.*;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.IdentifierLoadAccess;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.orm.ObjectRetrievalFailureException;
 
-import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.*;
+import com.app1.dao.GenericDao;
+import com.app1.dao.SearchException;
+import com.app1.model.Album;
+import com.app1.util.Pager;
 
 /**
  * This class serves as the Base class for all other DAOs - namely to hold
@@ -213,6 +227,47 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     public void reindexAll(boolean async) {
         HibernateSearchTools.reindexAll(async, getSessionFactory().getCurrentSession());
     }
+    
+    
+	public Pager findPageByCriteria(int pageNo, int pageSize, Map map,Class clazz)
+	{
+		Pager pager = null;
+		try
+		{
+			Criteria criteria = this.getSession().createCriteria(clazz);
+	
+			if (map != null)
+			{
+				Set<String> keys = map.keySet();
+				for (String key : keys)
+				{
+//TODO ´ýÍêÉÆ
+					//					if("title".equals(key)){
+//					criteria.add(Restrictions.like(key, "%"+map.get(key)+"%"));
+//					}else{
+//						criteria.add(Restrictions.eq(key, map.get(key)));
+//					}
+					
+				}
+			}
 
+			String count= criteria.setProjection(Projections.rowCount()).uniqueResult().toString();
+			int rowCount = Integer.parseInt(count);
+			criteria.setProjection(null);
+			criteria.setFirstResult((pageNo - 1) * pageSize);
+			criteria.setMaxResults(pageSize);
+
+			List result = criteria.list();
+			pager = new Pager(pageSize, pageNo, rowCount, result);	
+
+		} catch (RuntimeException re)
+		{
+			throw re;
+		} finally
+		{
+			return pager;
+		}
+
+	}
 
 }

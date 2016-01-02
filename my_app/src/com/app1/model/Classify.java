@@ -168,6 +168,7 @@ public class Classify extends BaseObject implements Serializable{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
 	 @Transient
 	 @JsonIgnore
 	public MultipartFile[] getFiles() {
