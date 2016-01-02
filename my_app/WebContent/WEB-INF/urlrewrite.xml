@@ -14,6 +14,14 @@
         <to last="true" type="redirect">%{context-path}/$1</to>
     </rule>
     <rule>
+        <from>/app/client/**</from>
+       <to>/index.jsp</to> 
+    </rule>
+    <rule>
+        <from>/client/img/**</from>
+       <to>/index.jsp</to> 
+    </rule>
+    <rule>
         <from>/j_security_check</from>
         <to>/j_security_check</to>
     </rule>
@@ -26,9 +34,13 @@
         <to>/services/$1</to>
     </rule>
     <rule>
+        <from>/pic/**</from>
+        <to>/app/client/img?url=$1</to>
+    </rule>
+    <rule>
         <from>/common/**</from>
         <to>/common/$1</to>
-    </rule>
+    </rule>    
     <rule>
         <from>/images/**</from>
         <to>/images/$1</to>
@@ -63,10 +75,7 @@
     </rule>
 
     <!-- AMP expects lists to go to "/home". This fixes it. -->
-    <rule>
-        <from>/home</from>
-        <to>/</to>
-    </rule>
+
 
     <!-- Spring MVC -->
     <rule>

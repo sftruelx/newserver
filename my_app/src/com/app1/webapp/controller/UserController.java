@@ -58,7 +58,7 @@ public class UserController extends BaseFormController {
     }
     
     @ResponseBody 
-    @RequestMapping("userform")
+    @RequestMapping("/userform")
     public Map onSubmit(User user, BindingResult result, HttpServletRequest request) throws Exception {
     	 Map<String, String> map = new HashMap();
         if (request.getParameter("cancel") != null) {

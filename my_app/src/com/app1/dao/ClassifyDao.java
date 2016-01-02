@@ -15,5 +15,5 @@ public interface ClassifyDao extends GenericDao<Classify, Long>{
 	
 	public List getLevel();
 	
-	public List<Classify> getParent(String title);
+	public List<Classify> getParent(Long parent_id);
 }

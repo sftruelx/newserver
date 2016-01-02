@@ -33,6 +33,7 @@ public class Album extends BaseObject implements Serializable{
 	private long id;
 	private String albumName;
 	private String author;
+	private Long classifyId;
 	private String descripe;
 	private Date publishDate;
 	private Date createTime;
@@ -57,8 +58,16 @@ public class Album extends BaseObject implements Serializable{
 	public void setAlbumName(String albumName) {
 		this.albumName = albumName;
 	}
+	@Column(name = "classify_id",nullable = true)
+    @Field
+    public Long getClassifyId() {
+		return classifyId;
+	}
 	
-    @Column(name = "author",nullable = true)
+	public void setClassifyId(Long classifyId) {
+		this.classifyId = classifyId;
+	}
+	@Column(name = "author",nullable = true)
     @Field
 	public String getAuthor() {
 		return author;

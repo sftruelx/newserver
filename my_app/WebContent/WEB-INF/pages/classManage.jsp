@@ -4,7 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript">
 
+</script>
 </head>
 <body>
 	<div style="margin-left: 10px; padding-bottom: 6px">
@@ -16,17 +18,15 @@
 				data-options="valueField:'id',textField:'title',url:'classifyparent?title='"">
 		</div>
 	</div>
-	<table id="dg" title="My Users" class="easyui-datagrid" 
+	<table id="dg" title="分类管理" class="easyui-datagrid" data-options="url:'classifies',fitColumns:true,singleSelect:true"
 		style="width: 100%; height: 80%" url="classifies" toolbar="#toolbar"
-		pagination="true" rownumbers="true" fitColumns="true" showPageList="false"
-		singleSelect="true">
+		pagination="true" rownumbers="true">
 		<thead>
 			<tr>
 				<th field="parent_id" width="50">父ID</th>
 				<th field="level" width="50">层级</th>
 				<th field="title" width="50">标题</th>
 				<th field="end" width="50">最终节点</th>
-				<th field="img_url" width="50">图片URL</th>
 				<th field="img_path" width="50">图片路径</th>
 			</tr>
 		</thead>
@@ -78,6 +78,7 @@
 	</div>
 
 	<script type="text/javascript">
+
 		var url = "classifyFrom";
 		function newUser() {
 
@@ -95,9 +96,9 @@
 			var row = $('#dg').datagrid('getSelected');
 			if (row) {
 				$('#dlg').dialog('open').dialog('center').dialog('setTitle',
-						'Edit User');
+						'编辑');
 				$('#fm').form('load', row);
-				url = 'userform?id=' + row.id + "&version=" + row.version;
+				url = 'classifyFrom?id=' + row.id;
 			}
 		}
 		function saveUser() {

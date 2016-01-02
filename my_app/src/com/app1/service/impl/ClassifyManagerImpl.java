@@ -38,8 +38,8 @@ public class ClassifyManagerImpl  extends GenericManagerImpl<Classify, Long> imp
 	    	return  dao.getLevel();
 	    }
 	    
-	    public List getParent(String title){
-	    	return  dao.getParent(title);
+	    public List getParent(Long parent_id){
+	    	return  dao.getParent(parent_id);
 	    }
 	    
 	    public void removeClassify(long id){

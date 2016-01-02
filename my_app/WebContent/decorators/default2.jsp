@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title></title>
 <link rel="stylesheet" type="text/css"
-	href="${ctx}/styles/easyui/themes/default/easyui.css">
+	href="${ctx}/styles/easyui/themes/metro-green/easyui.css">
 <link rel="stylesheet" type="text/css"
 	href="${ctx}/styles/easyui/themes/icon.css">
 <link rel="stylesheet" type="text/css"

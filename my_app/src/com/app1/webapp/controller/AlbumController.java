@@ -1,16 +1,13 @@
 package com.app1.webapp.controller;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app1.model.Album;
-import com.app1.model.Classify;
 import com.app1.service.AlbumManager;
 import com.app1.util.Pager;
 
@@ -29,8 +25,7 @@ public class AlbumController extends BaseFormController {
 	@Autowired
 	AlbumManager albumManager;
 	
-	@Value("#{configProperties['albumroot']}")
-	String savePath ;
+
 
 	@RequestMapping("/albumManage*")
 	public String showPage(ModelMap model, HttpServletRequest request) {
@@ -40,7 +35,6 @@ public class AlbumController extends BaseFormController {
 	@ResponseBody
 	@RequestMapping("/albums*")
 	public Pager execute2(Album album, HttpServletRequest request, @RequestParam("page") int nowpage, @RequestParam("rows") int rows) {
-		System.out.println(savePath);
 		Map<String, Object> map = new HashMap<String, Object>();
 
 
@@ -48,14 +42,11 @@ public class AlbumController extends BaseFormController {
 		return p;
 	}
 	
-
-
-
-
 	@ResponseBody
-	@RequestMapping("albumFrom*")
+	@RequestMapping("/albumForm*")
 	public Map filesUpload(Album album, HttpServletRequest request) {
-
+		Calendar cal = Calendar.getInstance();
+		String savePath = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.DAY_OF_YEAR);
 		Map<String, String> map = new HashMap();
 		String msg = null;
 
@@ -76,9 +67,9 @@ public class AlbumController extends BaseFormController {
 						MultipartFile file = files[i];
 						// ±£´æÎÄ¼þ
 						if ("".equals(fileName)) {
-							fileName = saveFile(file, savePath+album.getId());
+							fileName = saveFile(file, savePath);
 						} else {
-							fileName = fileName + ";" + saveFile(file,  savePath+album.getId());
+							fileName = fileName + ";" + saveFile(file,  savePath);
 						}
 					}
 				}

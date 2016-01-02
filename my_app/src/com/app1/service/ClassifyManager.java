@@ -17,5 +17,5 @@ public interface ClassifyManager {
 	 
 	 public void removeClassify(long id);
 	 
-	 public List<Classify> getParent(String title);
+	 public List<Classify> getParent(Long parent_id);
 }

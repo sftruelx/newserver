@@ -241,12 +241,11 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
 				Set<String> keys = map.keySet();
 				for (String key : keys)
 				{
-//TODO ´ýÍêÉÆ
-					//					if("title".equals(key)){
-//					criteria.add(Restrictions.like(key, "%"+map.get(key)+"%"));
-//					}else{
-//						criteria.add(Restrictions.eq(key, map.get(key)));
-//					}
+					if(key.toUpperCase().indexOf("ID")>0){
+						criteria.add(Restrictions.eq(key, map.get(key)));
+					}else{
+						criteria.add(Restrictions.like(key, "%"+map.get(key)+"%"));
+					}
 					
 				}
 			}

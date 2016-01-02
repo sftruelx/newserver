@@ -3,6 +3,7 @@ package com.app1.webapp.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +27,7 @@ import com.app1.util.Pager;
 
 @Controller
 public class ClassifyController extends BaseFormController {
-	@Value("#{configProperties['root']}")
-	String savePath ;
+
 	@Autowired
 	ClassifyManager classifyManager;
 
@@ -39,7 +39,6 @@ public class ClassifyController extends BaseFormController {
 	@ResponseBody
 	@RequestMapping("/classifies*")
 	public Pager execute2(Classify cla, HttpServletRequest request, @RequestParam("page") int nowpage, @RequestParam("rows") int rows) {
-		System.out.println(savePath);
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (cla.getLevel() > -1) {
 			map.put("level", cla.getLevel());
@@ -51,43 +50,11 @@ public class ClassifyController extends BaseFormController {
 		Pager p = classifyManager.getClassifies(nowpage, rows, map);
 		return p;
 	}
-
-	/***
-	 * 保存文件
-	 * 
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 * @throws IllegalStateException
-	 */
-	private String saveFile(MultipartFile file, long parent_id) throws IllegalStateException, IOException {
-
-		// 判断文件是否为空
-		if (!file.isEmpty()) {
-			// 创建目录，用parent_id作为目录名称
-			createDir(savePath + String.valueOf(parent_id));
-
-			// 生成文件名
-			String fileName = file.getOriginalFilename();
-			String prefix = fileName.substring(fileName.lastIndexOf("."));
-			UUID uuid = UUID.randomUUID();
-			String newname = uuid + prefix;// 新文件名
-			// 文件保存路径
-			String filePath = savePath + String.valueOf(parent_id) + "/" + newname;
-
-			// 转存文件
-			file.transferTo(new File(filePath));
-			return filePath;
-		}
-		return null;
-	}
-
-
-
 	@ResponseBody
 	@RequestMapping("classifyFrom*")
 	public Map filesUpload(Classify classify, HttpServletRequest request) {
-
+		Calendar cal = Calendar.getInstance();
+		String savePath = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.DAY_OF_YEAR);
 		Map<String, String> map = new HashMap();
 		String msg = null;
 
@@ -108,9 +75,9 @@ public class ClassifyController extends BaseFormController {
 						MultipartFile file = files[i];
 						// 保存文件
 						if ("".equals(fileName)) {
-							fileName = saveFile(file, classify.getParent_id());
+							fileName = saveFile(file, savePath);
 						} else {
-							fileName = fileName + ";" + saveFile(file, classify.getParent_id());
+							fileName = fileName + ";" + saveFile(file, savePath);
 						}
 					}
 				}
@@ -149,7 +116,7 @@ public class ClassifyController extends BaseFormController {
 	@ResponseBody
 	@RequestMapping("classifyparent*")
 	public List getParent(@RequestParam("title") String title) {
-		List<Classify> list = classifyManager.getParent(title);
+		List<Classify> list = classifyManager.getParent(1L);
 		return list;
 	}
 

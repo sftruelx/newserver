@@ -12,6 +12,7 @@
     <http pattern="/webjars/**" security="none"/>
     <http pattern="/login.jsp" security="none" />
  	<http pattern="/common/**" security="none"/>
+ 	<http pattern="/img/**" security="none"/>
  	<http pattern="/client/**" security="none"/>
  	
     <http auto-config="false">

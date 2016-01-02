@@ -1,9 +1,23 @@
 package com.app1.webapp.controller;
 
+import java.io.File;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.time.FastDateFormat;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.app1.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.context.MessageSource;
@@ -15,13 +29,8 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.app1.Constants;
+import com.app1.util.AESUtils;
 
 /**
  * Base Controller that contains convenience methods for subclasses.
@@ -190,33 +199,35 @@ public class BaseFormController implements ServletContextAware {
 			return false;
 		}
 	}
-	
+	@Value("#{configProperties['albumroot']}")
+	String rootPath ;
 	/***
 	 * 保存文件
 	 * 
 	 * @param file
 	 * @return
-	 * @throws IOException
-	 * @throws IllegalStateException
+	 * @throws Exception 
 	 */
-	public  String saveFile(MultipartFile file, String savePath) throws IllegalStateException, IOException {
+	public  String saveFile(MultipartFile file, String savePath) throws Exception {
 
 		// 判断文件是否为空
 		if (!file.isEmpty()) {
-			// 创建目录，用专辑id作为目录名称
-			createDir(savePath);
+			//TODO 创建目录，用专辑id作为目录名称,以后改为用日期
+			createDir(rootPath + savePath);
 
 			// 生成文件名
 			String fileName = file.getOriginalFilename();
 			String prefix = fileName.substring(fileName.lastIndexOf("."));
-			UUID uuid = UUID.randomUUID();
-			String newname = uuid + prefix;// 新文件名
+			String s = String.valueOf(	System.currentTimeMillis());
+		
+			
+			String newname =  s + prefix;// 新文件名
 			// 文件保存路径
-			String filePath = savePath  + "/" + newname;
+			String filePath = rootPath + savePath  + "/" + newname;
 
 			// 转存文件
 			file.transferTo(new File(filePath));
-			return filePath;
+			return  AESUtils.encrypt( savePath  + "/" + newname);
 		}
 		return null;
 	}

@@ -1,17 +1,1 @@
-/META-INF/
-/applicationContext-dao.xml
-/applicationContext-resources.xml
-/applicationContext-service.xml
-/db/
-/displaytag.properties
-/ehcache.xml
-/hibernate.cfg.xml
-/hibernate.properties
 /com/
-/jdbc.properties
-/log4j2.xml
-/mail.properties
-/messages.properties
-/packaged/
-/snippet/
-/application.properties

@@ -74,9 +74,10 @@ public class ClassifyDaoHibernate extends GenericDaoHibernate<Classify, Long> im
 	}
 	
 	
-	public List<Classify> getParent(String title){
+	public List<Classify> getParent(Long parent_id){
 		Criteria criteria = this.getSession().createCriteria(Classify.class);
-		criteria.add(Restrictions.like("title", "%" + title + "%"));
+		criteria.add(Restrictions.eq("parent_id", parent_id));
+		@SuppressWarnings("unchecked")
 		List<Classify> list = criteria.list();
 		return  list;
 	}
