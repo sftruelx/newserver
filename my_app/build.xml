@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="genwar" default="all" basedir=".">
+
+	<description> - Generate war file - </description>
+
+	<property environment="env" />
+
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="7" />
+	<property name="source" value="7" />
+
+	<property name="output.dir" location="." />
+	<property name="output.file" value="my_app.war" />
+
+	<property name="project.build" location="./antbuild" />
+	<property name="project.src" location="./src" />
+	<property name="project.web" location="./WebContent" />
+	<property name="project.lib" location="./lib" />
+	<property name="project.res" location="./res" />
+	<property name="project.res" location="./res" />
+	<property name="project.svc" location="./svc" />
+  <property name="project.resources" location="./resources" />
+	<property name="project.war" location="${project.build}/${output.file}" />
+
+	<property name="tmp" location="${project.build}/tmp" />
+	<property name="tmp.src" location="${tmp}/src" />
+	<property name="tmp.lib" location="${tmp}/lib" />
+	<property name="tmp.bin" location="${tmp}/bin" />
+	<property name="tmp.web" location="${tmp}/web" />
+	<property name="tmp.classes" location="${tmp}/classes" />
+
+	<path id="javaclass.path">
+		<pathelement path="${env.CLASSPATH}" />
+		<pathelement path="${env.JBOSS_HOME}/server/all/lib/servlet-api.jar" />
+		<pathelement path="${env.JBOSS_HOME}/server/all/lib/jsp-api.jar" />
+	
+		<fileset dir="${tmp.lib}" includes="*.jar" />
+		<!-- <fileset dir="${project.lib}" includes="*.jar" /> 
+		
+		-->
+	</path>
+
+	<target name="clean">
+		<delete file="${output.dir}/${output.file}" failonerror="false" />
+		<delete dir="${project.build}" failonerror="false" />
+		<mkdir dir="${project.build}" />
+	</target>
+
+	<target name="all" depends="clean,buildwar" />
+
+	<target name="initdir">
+
+		<echo message="Init directories ..." />
+
+		<delete dir="${tmp}" failonerror="false" />
+
+		<mkdir dir="${tmp}" />
+
+		<mkdir dir="${tmp.src}" />
+		<copy todir="${tmp.src}">
+			<fileset dir="${project.src}" excludes="**/.svn/**" />
+			<fileset dir="${project.resources}" excludes="**/.svn/**" />
+		</copy>
+    
+    
+		<mkdir dir="${tmp.lib}" />
+		<copy todir="${tmp.lib}">
+			<fileset dir="${project.web}/WEB-INF/lib" >
+				<include name="*.jar"/>
+				<include name="*.tld"/>
+			</fileset>
+		</copy>
+
+		<mkdir dir="${tmp.bin}" />
+
+		<mkdir dir="${tmp.web}/WEB-INF/lib" />
+		<copy todir="${tmp.web}">
+			<fileset dir="${project.web}" excludes="**/.svn/**" >
+			</fileset>
+		</copy>
+		<delete dir="${tmp.web}/WEB-INF/classes" failonerror="false" />
+		<mkdir dir="${tmp.web}/WEB-INF/classes" />
+
+	</target>
+
+	<target name="compilejava" depends="initdir">
+		<echo message="Compiling java code ..." />
+		<javac debug="true"  debuglevel="${debuglevel}" destdir="${tmp.bin}" target="${target}" source="${source}" fork="true" encoding="UTF-8">
+				<src path="${tmp.src}" />
+				<classpath refid="javaclass.path" />
+	      </javac>
+		<copy todir="${tmp.web}/WEB-INF/classes" includeemptydirs="false">
+			<fileset dir="${tmp.src}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+		<copy todir="${tmp.web}/WEB-INF/classes" includeemptydirs="false">
+			<fileset dir="${tmp.bin}">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="buildwar" depends="compilejava">
+		<echo message="Packing war file ..." />
+		<delete file="${project.war}" failonerror="false" />
+		<war destfile="${project.war}" basedir="${tmp.web}" webxml="${tmp.web}/WEB-INF/web.xml" encoding="utf-8" />
+		<delete dir="${tmp}" failonerror="false" />
+		<delete file="${output.dir}/${output.file}" failonerror="false" />
+		<move todir="${output.dir}" includeemptydirs="false" filtering="true">
+			<fileset dir="${project.build}">
+				<include name="**/*.war" />
+			</fileset>
+		</move>
+		<delete dir="${project.build}" failonerror="false" />
+	</target>
+
+</project>

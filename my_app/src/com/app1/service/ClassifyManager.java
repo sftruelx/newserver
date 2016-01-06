@@ -18,4 +18,6 @@ public interface ClassifyManager {
 	 public void removeClassify(long id);
 	 
 	 public List<Classify> getParent(Long parent_id);
+	 
+	 public Classify getClassify(long id);
 }

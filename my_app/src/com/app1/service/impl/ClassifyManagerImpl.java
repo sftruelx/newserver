@@ -45,5 +45,8 @@ public class ClassifyManagerImpl  extends GenericManagerImpl<Classify, Long> imp
 	    public void removeClassify(long id){
 	    	dao.remove(id);
 	    }
+	    public Classify getClassify(long id){
+	    	return dao.get(id);
+	    }
 
 }

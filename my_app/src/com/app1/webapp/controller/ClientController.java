@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.app1.model.Classify;
 import com.app1.service.ClassifyManager;
 import com.app1.util.AESUtils;
-import com.app1.util.EncryptionUtils;
 
 @Controller
 public class ClientController extends BaseFormController {
@@ -60,7 +58,7 @@ public class ClientController extends BaseFormController {
 	
 	@RequestMapping("client/img")
 	public void fileDownload(HttpServletRequest request, HttpServletResponse response) {
-		// »ñÈ¡ÍøÕ¾²¿ÊğÂ·¾¶(Í¨¹ıServletContext¶ÔÏó)£¬ÓÃÓÚÈ·¶¨ÏÂÔØÎÄ¼şÎ»ÖÃ£¬´Ó¶øÊµÏÖÏÂÔØ
+		// ï¿½ï¿½È¡ï¿½ï¿½Õ¾ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½(Í¨ï¿½ï¿½ServletContextï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Î»ï¿½Ã£ï¿½ï¿½Ó¶ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String fileName = request.getParameter("url");
 
 		try {
@@ -69,20 +67,20 @@ public class ClientController extends BaseFormController {
 			e1.printStackTrace();
 			return ;
 		}
-		// 1.ÉèÖÃÎÄ¼şContentTypeÀàĞÍ£¬ÕâÑùÉèÖÃ£¬»á×Ô¶¯ÅĞ¶ÏÏÂÔØÎÄ¼şÀàĞÍ
+		// 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ContentTypeï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
 		response.setContentType("multipart/form-data");
-		// 2.ÉèÖÃÎÄ¼şÍ·£º×îºóÒ»¸ö²ÎÊıÊÇÉèÖÃÏÂÔØÎÄ¼şÃû
-		// Éú³ÉÎÄ¼şÃû
+		// 2.ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 		String prefix = fileName.substring(fileName.lastIndexOf("/")+1);
 		response.setHeader("Content-Disposition", "attachment;fileName=" + prefix);
 		ServletOutputStream out;
-		// Í¨¹ıÎÄ¼şÂ·¾¶»ñµÃFile¶ÔÏó(¼ÙÈç´ËÂ·¾¶ÖĞÓĞÒ»¸ödownload.pdfÎÄ¼ş)
+		// Í¨ï¿½ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Fileï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½download.pdfï¿½Ä¼ï¿½)
 		File file = new File(rootPath + fileName);
 
 		try {
 			FileInputStream inputStream = new FileInputStream(file);
 
-			// 3.Í¨¹ıresponse»ñÈ¡ServletOutputStream¶ÔÏó(out)
+			// 3.Í¨ï¿½ï¿½responseï¿½ï¿½È¡ServletOutputStreamï¿½ï¿½ï¿½ï¿½(out)
 			out = response.getOutputStream();
 
 			byte[] buffer = new byte[1024];

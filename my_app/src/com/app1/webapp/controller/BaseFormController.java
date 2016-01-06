@@ -184,25 +184,23 @@ public class BaseFormController implements ServletContextAware {
 	public boolean createDir(String destDirName) {
 		File dir = new File(destDirName);
 		if (dir.exists()) {
-			System.out.println("创建目录" + destDirName + "失败，目标目录已经存在");
+			System.out.println("" + destDirName + "");
 			return false;
 		}
 		if (!destDirName.endsWith(File.separator)) {
 			destDirName = destDirName + File.separator;
 		}
-		// 创建目录
 		if (dir.mkdirs()) {
-			System.out.println("创建目录" + destDirName + "成功！");
+			System.out.println("" + destDirName + "");
 			return true;
 		} else {
-			System.out.println("创建目录" + destDirName + "失败！");
+			System.out.println("" + destDirName + "");
 			return false;
 		}
 	}
 	@Value("#{configProperties['albumroot']}")
 	String rootPath ;
 	/***
-	 * 保存文件
 	 * 
 	 * @param file
 	 * @return
@@ -210,22 +208,17 @@ public class BaseFormController implements ServletContextAware {
 	 */
 	public  String saveFile(MultipartFile file, String savePath) throws Exception {
 
-		// 判断文件是否为空
 		if (!file.isEmpty()) {
-			//TODO 创建目录，用专辑id作为目录名称,以后改为用日期
 			createDir(rootPath + savePath);
 
-			// 生成文件名
 			String fileName = file.getOriginalFilename();
 			String prefix = fileName.substring(fileName.lastIndexOf("."));
 			String s = String.valueOf(	System.currentTimeMillis());
 		
 			
-			String newname =  s + prefix;// 新文件名
-			// 文件保存路径
+			String newname =  s + prefix;// 锟斤拷锟侥硷拷锟斤拷
 			String filePath = rootPath + savePath  + "/" + newname;
 
-			// 转存文件
 			file.transferTo(new File(filePath));
 			return  AESUtils.encrypt( savePath  + "/" + newname);
 		}

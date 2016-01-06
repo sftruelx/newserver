@@ -18,12 +18,12 @@ public class AESUtils {
 	
 	private static String key = "1234";
 	/**
-	 * 加密
+
 	 * 
 	 * @param content
-	 *            需要加密的内容
+	
 	 * @param password
-	 *            加密密码
+	
 	 * @return
 	 */
 	public static byte[] encrypt(String content, String password) {
@@ -33,11 +33,11 @@ public class AESUtils {
 			SecretKey secretKey = kgen.generateKey();
 			byte[] enCodeFormat = secretKey.getEncoded();
 			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
+			Cipher cipher = Cipher.getInstance("AES");
 			byte[] byteContent = content.getBytes("utf-8");
-			cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
+			cipher.init(Cipher.ENCRYPT_MODE, key);
 			byte[] result = cipher.doFinal(byteContent);
-			return result; // 加密
+			return result; // 锟斤拷锟斤拷
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -55,12 +55,12 @@ public class AESUtils {
 	}
 
 	/**
-	 * 解密
+	
 	 * 
 	 * @param content
-	 *            待解密内容
+	
 	 * @param password
-	 *            解密密钥
+
 	 * @return
 	 */
 	public static byte[] decrypt(byte[] content, String password) {
@@ -70,10 +70,10 @@ public class AESUtils {
 			SecretKey secretKey = kgen.generateKey();
 			byte[] enCodeFormat = secretKey.getEncoded();
 			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
-			cipher.init(Cipher.DECRYPT_MODE, key);// 初始化
+			Cipher cipher = Cipher.getInstance("AES");
+			cipher.init(Cipher.DECRYPT_MODE, key);
 			byte[] result = cipher.doFinal(content);
-			return result; // 加密
+			return result; 
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -88,7 +88,7 @@ public class AESUtils {
 		return null;
 	}
 
-	/**将二进制转换成16进制 
+	/**锟斤拷锟斤拷锟斤拷锟斤拷转锟斤拷锟斤拷16锟斤拷锟斤拷 
 	 * @param buf 
 	 * @return 
 	 */  
@@ -104,7 +104,7 @@ public class AESUtils {
 	        return sb.toString();  
 	}  
 	
-    /**将16进制转换为二进制
+    /**锟斤拷16锟斤拷锟斤拷转锟斤拷为锟斤拷锟斤拷锟斤拷
      * @param hexStr
      * @return
      */
@@ -133,13 +133,13 @@ public class AESUtils {
 	public static void main(String[] args) throws Exception {
         String content = "1234";
 
-        //加密
-        System.out.println("加密前：" + content);
+        //锟斤拷锟斤拷
+        System.out.println("" + content);
         String encryptResultStr = encrypt(content);
-        System.out.println("加密后：" + encryptResultStr);
-        //解密
+        System.out.println("" + encryptResultStr);
+        //锟斤拷锟斤拷
        
         String decryptResult = decrypt(encryptResultStr);
-        System.out.println("解密后：" + decryptResult);
+        System.out.println("" + decryptResult);
 	}
 }

@@ -30,4 +30,8 @@ public class AlbumManagerImpl  extends GenericManagerImpl<Album, Long> implement
 	public Album saveAlbum(Album album){
 		return dao.save(album);
 	}
+	
+	public Album getAlbum(long id){
+		return dao.get(id);
+	}
 }

@@ -21,62 +21,69 @@ import com.app1.util.Pager;
 
 @Controller
 public class AlbumController extends BaseFormController {
-	
+
 	@Autowired
 	AlbumManager albumManager;
-	
-
 
 	@RequestMapping("/albumManage*")
 	public String showPage(ModelMap model, HttpServletRequest request) {
 		return "albumManage";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/albums*")
 	public Pager execute2(Album album, HttpServletRequest request, @RequestParam("page") int nowpage, @RequestParam("rows") int rows) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-
 		Pager p = albumManager.getAlbums(nowpage, rows, map);
 		return p;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/albumForm*")
 	public Map filesUpload(Album album, HttpServletRequest request) {
 		Calendar cal = Calendar.getInstance();
-		String savePath = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.DAY_OF_YEAR);
+		String savePath = cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.DAY_OF_YEAR);
 		Map<String, String> map = new HashMap();
 		String msg = null;
 
 		try {
 
 			if (request.getParameter("delete") != null) {
-//				albumManager.removeAlbum(classify.getId());
+				// albumManager.removeAlbum(classify.getId());
 				saveMessage(request, getText("user.deleted", album.getAlbumName(), request.getLocale()));
 				map.put("success", "1");
 			} else {
-				// TODO 修改
 				String fileName = "";
 				MultipartFile[] files = album.getFiles();
-				// 判断file数组不能为空并且长度大于0
 				if (files != null && files.length > 0) {
-					// 循环获取file数组中得文件
 					for (int i = 0; i < files.length; i++) {
 						MultipartFile file = files[i];
-						// 保存文件
 						if ("".equals(fileName)) {
 							fileName = saveFile(file, savePath);
 						} else {
-							fileName = fileName + ";" + saveFile(file,  savePath);
+							fileName = fileName + ";" + saveFile(file, savePath);
 						}
 					}
 				}
-				album.setImgPath(fileName);
-				// 保存 classify 进入数据库中
-				album.setCreateTime(new Date());
-				albumManager.saveAlbum(album);
+				if (album.getId() > 0) {
+					Album old = null;
+					old = albumManager.getAlbum(album.getId());
+					if (fileName != null) {
+						old.setImgPath(fileName);
+					}
+					old.setAlbumName(album.getAlbumName());
+					old.setAuthor(album.getAuthor());
+					old.setDescripe(album.getDescripe());
+					old.setPublishDate(album.getPublishDate());
+					old.setCreateTime(new Date());
+					albumManager.saveAlbum(old);
+				} else {
+
+					album.setImgPath(fileName);
+					album.setCreateTime(new Date());
+					albumManager.saveAlbum(album);
+				}
 			}
 
 		} catch (Exception e) {

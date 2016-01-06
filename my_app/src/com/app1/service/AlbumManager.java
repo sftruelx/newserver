@@ -11,4 +11,6 @@ public interface AlbumManager {
 	public Pager getAlbums(int pageNo, int pageSize, Map map);
 	
 	public Album saveAlbum(Album album);
+	
+	public Album getAlbum(long id);
 }

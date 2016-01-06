@@ -60,9 +60,7 @@
 					class="easyui-textbox" />
 			</div>
 			<div class="fitem">
-				<label>发布日期:</label><input class="easyui-datebox"
-					formatter="Common.TimeFormatter" id="publishDate"
-					name="publishDate" />
+				<label>发布日期: </label>&nbsp;<input type="text" class="easyui-datebox"  name="publishDate">
 			</div>
 
 		</form>
@@ -70,10 +68,10 @@
 	<div id="dlg-buttons">
 
 		<a href="javascript:void(0)" class="easyui-linkbutton c6"
-			iconCls="fa fa-save" onclick="saveUser()" style="width: 90px">Save</a>
+			iconCls="fa fa-save" onclick="saveUser()" style="width: 90px">保存</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="fa fa-pause" onclick="javascript:$('#dlg').dialog('close')"
-			style="width: 90px">Cancel</a>
+			style="width: 90px">取消</a>
 	</div>
 	<table id="dg-artist" title="音频管理" class="easyui-datagrid"
 		style="width: 100%; height: 370px" url="artists" toolbar="#artistToolbar"
@@ -105,13 +103,13 @@
 		<form id="artistfm" action="classifyFrom" method="post"
 			enctype="multipart/form-data">
 			<div class="fitem">
-				<label>选择图片:</label> <input class="easyui-filebox"
+				<label>选择音频文件:</label> <input class="easyui-filebox"
 					name="files" data-options="prompt:'Choose another file...'"
 					style="width: 70%" />
 			</div>
 			<div class="fitem">
 				<label>专辑ID:</label> <input id="albumId" name="albumId"
-					class="easyui-textbox" />
+					class="easyui-textbox"  readonly="readonly"/>
 			</div>
 			<div class="fitem">
 				<label>音频名称:</label> <input id="artistName" name="artistName"
@@ -122,11 +120,11 @@
 	<div id="dlg-buttons">
 
 		<a href="javascript:void(0)" class="easyui-linkbutton c6"
-			iconCls="fa fa-save" onclick="saveArtist()" style="width: 90px">Save</a>
+			iconCls="fa fa-save" onclick="saveArtist()" style="width: 90px">保存</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="fa fa-pause"
 			onclick="javascript:$('#dlg-artist').dialog('close')"
-			style="width: 90px">Cancel</a>
+			style="width: 90px">取消</a>
 	</div>
 	<script type="text/javascript">
 	function ClickRow(index,row){
@@ -134,21 +132,15 @@
 				albumId : row.id
 		});
 	}
-		toDate = function(str) {
-			var s = value.toString();
-			var da = new Date(parseInt(s.replace("/Date(", "")
-					.replace(")/", ""), 10));
-			return da;
-		};
-
-		formatterDate = function(date) {
-			var day = date.getDate() > 9 ? date.getDate() : "0"
-					+ date.getDate();
-			var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0"
-					+ (date.getMonth() + 1);
-			return date.getFullYear() + '-' + month + '-' + day;
-		};
-
+	
+	$.fn.datebox.defaults.parser = function(s){
+		var t = new Date(parseInt(s));
+		if (t){
+			return t;
+		} else {
+			return new Date();
+		}
+	}
 		var url = "albumForm";
 		function newAlbum() {
 			$('#dlg').dialog('open').dialog('center').dialog('setTitle', '新分类');
@@ -166,7 +158,6 @@
 				$('#dlg').dialog('open').dialog('center').dialog('setTitle',
 						'Edit Album');
 				$('#fm').form('load', row);
-			
 				
 			}
 		}
@@ -231,14 +222,13 @@
 				if (value == undefined || value == null) {
 					return "null";
 				}
-				//alert(value);
-				/*json格式时间转js时间格式*/
-				var s = value.toString();
-				var da = new Date(parseInt(s.replace("/Date(", "").replace(
-						")/", ""), 10));
-				//alert(date);
-				return da.getFullYear() + "-" + (da.getMonth() + 1) + "-"
-						+ (da.getDay());// +da.getHours()+":"+da.getSeconds()+":"+da.getMinutes(); 
+
+				var da = new Date(parseInt(value));
+				Y = da.getFullYear();
+				M = (da.getMonth() < 9 ? '0'+(da.getMonth()+1) : da.getMonth()+1);
+				D = (da.getDate() < 10 ? '0' + da.getDate() : da.getDate());
+
+				return M +"/" + D + "/" + Y;
 
 			},
 		ClassifyFormatter : function(value, rec, i) {

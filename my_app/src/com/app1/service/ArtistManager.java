@@ -7,8 +7,10 @@ import com.app1.util.Pager;
 
 public interface ArtistManager {
 
-	Pager getArtists(int pageNo, int pageSize, Map map);
+	public Pager getArtists(int pageNo, int pageSize, Map map);
 
-	Artist saveArtist(Artist Artist);
+	public Artist saveArtist(Artist Artist);
+	
+	public Artist getArtist(long id);
 
 }

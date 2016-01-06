@@ -38,4 +38,8 @@ public class ArtistManagerImpl  extends GenericManagerImpl<Artist, Long> impleme
 	public Artist saveArtist(Artist Artist){
 		return dao.save(Artist);
 	}
+	
+	public Artist getArtist(long id){
+		return dao.get(id);
+	}
 }

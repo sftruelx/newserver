@@ -23,7 +23,7 @@
 		pagination="true" rownumbers="true">
 		<thead>
 			<tr>
-				<th field="parent_id" width="50">父ID</th>
+				<th field="parent_id"  formatter="Common.ClassifyFormatter" width="50">父节点</th>
 				<th field="level" width="50">层级</th>
 				<th field="title" width="50">标题</th>
 				<th field="end" width="50">最终节点</th>
@@ -64,7 +64,7 @@
 			</div>
 			<div class="fitem">
 				<label>是否最终分类:</label> <input id="end" name="end"
-					class="easyui-switchbutton" data-options="onText:'是',offText:'否'">
+					class="easyui-switchbutton" data-options="onText:'是',offText:'否',value:'是'">
 			</div>
 		</form>
 	</div>
@@ -78,7 +78,27 @@
 	</div>
 
 	<script type="text/javascript">
+	var Common = {
+		ClassifyFormatter : function(value, rec, i) {
 
+			if (value == undefined || value == null) {
+				return "null";
+			}
+			//alert(value);
+			var data = $("#findparent").combobox('getData');
+			
+			var s = value.toString();
+			for( i=0;i<data.length;i++){
+				if(data[i].id == s){
+					return data[i].title;
+				}
+				//alert(data[i]);
+			}
+			
+			return ''; 
+
+		}
+		};
 		var url = "classifyFrom";
 		function newUser() {
 

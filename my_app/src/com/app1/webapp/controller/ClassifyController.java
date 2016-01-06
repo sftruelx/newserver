@@ -1,19 +1,15 @@
 package com.app1.webapp.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +46,12 @@ public class ClassifyController extends BaseFormController {
 		Pager p = classifyManager.getClassifies(nowpage, rows, map);
 		return p;
 	}
+
 	@ResponseBody
 	@RequestMapping("classifyFrom*")
 	public Map filesUpload(Classify classify, HttpServletRequest request) {
 		Calendar cal = Calendar.getInstance();
-		String savePath = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.DAY_OF_YEAR);
+		String savePath = cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.DAY_OF_YEAR);
 		Map<String, String> map = new HashMap();
 		String msg = null;
 
@@ -65,15 +62,12 @@ public class ClassifyController extends BaseFormController {
 				saveMessage(request, getText("user.deleted", classify.getTitle(), request.getLocale()));
 				map.put("success", "1");
 			} else {
-				// TODO –ﬁ∏ƒ
 				String fileName = "";
 				MultipartFile[] files = classify.getFiles();
-				// ≈–∂œfile ˝◊È≤ªƒ‹Œ™ø’≤¢«“≥§∂»¥Û”⁄0
 				if (files != null && files.length > 0) {
-					// —≠ª∑ªÒ»°file ˝◊È÷–µ√Œƒº˛
 					for (int i = 0; i < files.length; i++) {
 						MultipartFile file = files[i];
-						// ±£¥ÊŒƒº˛
+						// ÔøΩÔøΩÔøΩÔøΩÔøΩƒºÔøΩ
 						if ("".equals(fileName)) {
 							fileName = saveFile(file, savePath);
 						} else {
@@ -81,15 +75,28 @@ public class ClassifyController extends BaseFormController {
 						}
 					}
 				}
-				classify.setImg_path(fileName);
-				if ("on".equals(classify.getEnd())) {
-					classify.setEnd(" «");
+				if (classify.getId() > 0) {
+					Classify old = classifyManager.getClassify(classify.getId());
+					if (fileName != null) {
+						old.setImg_path(fileName);
+					}
+					if ("on".equals(classify.getEnd())) {
+						old.setEnd("ÊòØ");
+					} else {
+						old.setEnd("Âê¶");
+					}
+					old.setTitle(classify.getTitle());
+					classifyManager.saveClassify(old);
 				} else {
-					classify.setEnd("∑Ò");
+					classify.setImg_path(fileName);
+					if ("on".equals(classify.getEnd())) {
+						classify.setEnd("ÊòØ");
+					} else {
+						classify.setEnd("Âê¶");
+					}
+					classify.setCreate_tm(new Date());
+					classifyManager.saveClassify(classify);
 				}
-				// ±£¥Ê classify Ω¯»Î ˝æ›ø‚÷–
-				classify.setCreate_tm(new Date());
-				classifyManager.saveClassify(classify);
 			}
 
 		} catch (Exception e) {

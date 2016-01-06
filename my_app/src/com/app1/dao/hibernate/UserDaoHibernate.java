@@ -50,16 +50,6 @@ public class UserDaoHibernate extends GenericDaoHibernate<User, Long> implements
 		
 	}
 
-	/**
-	 * @function 分页显示符合所有的记录数，将查询结果封装为Pager
-	 * @param pageNo
-	 *            当前页数
-	 * @param pageSize
-	 *            每页显示的条数
-	 * @param map
-	 *            将查询条件封装为map
-	 * @return 查询结果Pager
-	 */
 	public Pager findPageByCriteria(int pageNo, int pageSize, Map map)
 	{
 		Pager pager = null;
